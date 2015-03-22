@@ -1,0 +1,55 @@
+<!DOCTYPE HTML>
+<html xmlns=http://www.w3.org/1999/xhtml>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>文件管理系统-注册</title>
+		<link href="http://netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+		<link href="./css/calender.css" rel="stylesheet">
+        <script type="text/javascript" src="http://lib.sinaapp.com/js/jquery/2.0.3/jquery-2.0.3.min.js"></script>
+        <script type="text/javascript" src="./js/landed.js"></script>
+        <script type="text/javascript" src="./js/calender.js"></script>
+        <script type="text/javascript" src="./js/regist.js"></script>
+        
+	</head>
+	<body>
+		<div class="regForm">
+			<form>
+				<p id="p_username">
+					*工号：<input />
+					<span class="error red"></span>
+					<span class="ok">√</span>
+				</p>
+				<p id="p_passwd">
+					*密码：<input type="password"/>
+					<span class="error red">密码长度不能少于6位</span>
+					<span class="ok">√</span>
+				</p>
+				<p id="p_passwd2">
+					*重复密码：<input  type="password"/>
+					<span class="error red">两次密码不一致</span>
+					<span class="ok">√</span>
+				</p>
+				<p id="p_idCard">
+					*身份证号：<input />
+					<span class="error red">身份证号格式错误</span>
+					<span class="ok">√</span>
+				</p>
+				<p id="p_email">
+					*邮箱：<input />
+					<!-- <a class="a_bt">发送验证码</a> -->
+					<span class="error red">邮箱格式不正确</span>
+					<span class="ok">√</span>
+				</p>
+				<p id="p_name">
+					*真实姓名：<input />
+					<span class="error red">姓名格式不对</span>
+					<span class="ok">√</span>
+				</p>
+            </form>
+
+            <input id="bt_submitReg" type="submit" value="提交"/>
+            <input id="bt_return" type="submit" value="返回"/>
+        </div>
+
+	</body>
+</html>
