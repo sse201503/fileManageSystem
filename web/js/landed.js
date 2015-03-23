@@ -24,17 +24,17 @@ function getCookie(c_name)
 
 $(document).ready(function(){
     
-    //å½“å­˜åœ¨ç™»å½•ä¿¡æ¯æ—¶
-    if(getCookie("ZZFLSCookie")!="")
+    //µ±´æÔÚµÇÂ¼ĞÅÏ¢Ê±
+    if(getCookie("cookie")!="")
     {
-        //è¿™é‡Œéœ€è¦åˆ¤æ–­cookieæ˜¯å¦æ˜¯ä¼ªé€ çš„ï¼Œå› æ­¤åˆ©ç”¨cookieé‡æ–°æ£€éªŒç™»å½•
+        //ÕâÀïĞèÒªÅĞ¶ÏcookieÊÇ·ñÊÇÎ±ÔìµÄ£¬Òò´ËÀûÓÃcookieÖØĞÂ¼ìÑéµÇÂ¼
         $.ajax({
             type: 'POST',
             url: "/php/isCookieValid.php" ,
             data: {
                 type:"isCookieValid",
                 username: getCookie("username"),
-                cookie: getCookie("ZZFLSCookie")
+                cookie: getCookie("cookie")
             },
             success: function(data) 
             {
@@ -42,17 +42,18 @@ $(document).ready(function(){
                 {
                     $("#user-name").text(getCookie("username"));
                     $("div.unLanded").hide();
+                    // alert("ÒÑ¾­µÇÂ¼ÁË");
                 }
                 else
                 {
                     $("div.alreadyLanded").hide();
-                    alert("ç™»å½•å·²å¤±æ•ˆï¼Œè¯·é‡æ–°ç™»å½•");
+                    alert("µÇÂ¼ÒÑÊ§Ğ§£¬ÇëÖØĞÂµÇÂ¼");
                     alert(data);   
                 }
             },
             dataType:'json',
             error : function() {       
-                alert("ç½‘ç»œå¼‚å¸¸ï¼");    
+                alert("ÍøÂçÒì³££¡");    
             }    
         });
         
@@ -63,48 +64,33 @@ $(document).ready(function(){
     }
     
     
-    /***********  ç™»å½•çŠ¶æ€ä¸‹   **********/
-    $("#div_user_name_menu").hide();
-    $(".alreadyLanded").mouseover(
-        function()
-        {
-            $("#div_user_name_menu").show();
-        }
-    );
-    $(".div_landed").mouseleave(
-        function()
-        {
-            $("#div_user_name_menu").hide();
-        }
-    );
-    $("#quit").click(
-        function()
-        {
-            //åˆ é™¤cookieï¼ˆå–æ¶ˆè‡ªåŠ¨ç™»å½•ï¼‰
-            setCookie("ZZFLSCookie",'',-1);
-            setCookie("username",'',-1);
-            //åˆ·æ–°é¡µé¢
-            window.location.reload();
-        }
-    );
+    // /***********  µÇÂ¼×´Ì¬ÏÂ   **********/
+    // $("#div_user_name_menu").hide();
+    // $(".alreadyLanded").mouseover(
+    //     function()
+    //     {
+    //         $("#div_user_name_menu").show();
+    //     }
+    // );
+    // $(".div_landed").mouseleave(
+    //     function()
+    //     {
+    //         $("#div_user_name_menu").hide();
+    //     }
+    // );
+    // $("#quit").click(
+    //     function()
+    //     {
+    //         //É¾³ıcookie£¨È¡Ïû×Ô¶¯µÇÂ¼£©
+    //         setCookie("ZZFLSCookie",'',-1);
+    //         setCookie("username",'',-1);
+    //         //Ë¢ĞÂÒ³Ãæ
+    //         window.location.reload();
+    //     }
+    // );
     
-    /***********  éç™»å½•çŠ¶æ€ä¸‹  **********/
-    $(".div_user_landed").hide();
-    $("a#landed").click(
-        function()
-        {
-            $(".div_user_landed").show();
-        }
-    );
-    $(".btn-cancel").click(
-        function()
-        {
-            $(".div_user_landed").hide();
-            $("#loginMsg").text();
-        }
-    );
     
-    /************  åˆ©ç”¨Ajaxç™»å½•éªŒè¯  ***********/
+    /************  ÀûÓÃAjaxµÇÂ¼ÑéÖ¤  ***********/
     
     $("#bt_ensure").click(
         function login()
@@ -121,11 +107,11 @@ $(document).ready(function(){
                 {
                     if(data['status'] == "1")
                     {
-                        //ç™»å½•æˆåŠŸï¼Œå…ˆè®¾ç½®cookie
-                        setCookie("ZZFLSCookie",data['cookie'],7);
+                        //µÇÂ¼³É¹¦£¬ÏÈÉèÖÃcookie
+                        setCookie("cookie",data['cookie'],7);
                         setCookie("username",data['username'],7);
                         
-                        //åˆ·æ–°é¡µé¢
+                        //Ë¢ĞÂÒ³Ãæ
                         window.location.reload();
                     }
                     else
@@ -135,7 +121,7 @@ $(document).ready(function(){
                 },
                 dataType:'json',
                 error : function() {       
-                    alert("ç½‘ç»œå¼‚å¸¸ï¼");    
+                    alert("ÍøÂçÒì³££¡");    
                 }    
             });
         }                  

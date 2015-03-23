@@ -1,9 +1,16 @@
 $(document).ready(function(){
-	//éšè—å…¨éƒ¨æç¤º
+	//Òş²Ø³É¹¦×¢²áµÄÌáÊ¾
+	$(".regSuccess").hide();
+	$(".regForm").show();
+	//Òş²ØÈ«²¿ÌáÊ¾
 	$(".ok").hide();
 	$(".error").hide();
 
-	//ç”¨æˆ·å
+
+	//×Ô¶¯Ìø×ª
+	
+
+	//ÓÃ»§Ãû
 	function isUsernameOK(str){
 		$.ajax({
 			type: 'POST',
@@ -17,137 +24,220 @@ $(document).ready(function(){
 				if(data['status'] == "1")
 				{
 					$("#p_username").children("span.error").hide();
-                    $("#p_username").children("span.ok").show();
-                    return 1;
-                }
-                else
-                {
-                	$("#p_username").children("span.ok").hide();
-                	$("#p_username").children("span.error").text(data['description']);
-                	$("#p_username").children("span.error").show();
-                	return 0;
-                }
-            },
-            dataType:'json',
-            error : function() {       
-            	alert("ç½‘ç»œå¼‚å¸¸ï¼");  
-            	return 0;  
-            }    
-        });
+					$("#p_username").children("span.ok").show();
+					return true;
+				}
+				else
+				{
+					$("#p_username").children("span.ok").hide();
+					$("#p_username").children("span.error").text(data['description']);
+					$("#p_username").children("span.error").show();
+					return false;
+				}
+			},
+			dataType:'json',
+			error : function() {       
+				alert("ÍøÂçÒì³££¡");  
+				return false;  
+			}    
+		});
 	}
 	function isUsername(str)
 	{
 		var reg = /^[0-9]{5,10}$/; 
 		return reg.test(str); 
 	}
-	$("#p_username").children("input").change(function(){
+	function checkUsername(){
 		if( !isUsername($("#p_username").children("input").val()) )
 		{
 			$("#p_username").children("span.ok").hide();
-			$("#p_username").children("span.error").text("å·¥å·æ ¼å¼é”™è¯¯");
+			$("#p_username").children("span.error").text("¹¤ºÅ¸ñÊ½´íÎó");
 			$("#p_username").children("span.error").show();
+			return false;
 		}
 		else 
 		{
-			isUsernameOK($("#p_username").children("input").val());
+			return isUsernameOK($("#p_username").children("input").val());
 		}
-			
-	});
 
-	//å¯†ç 
+	}
+	$("#p_username").children("input").change(checkUsername);
+
+	//ÃÜÂë
 	function isPasswd(str){
 		return ($("#p_passwd").children("input").val()).length >= 6;
 	}
-	$("#p_passwd").children("input").change(function(){
+	function checkPasswd() {
 		if(!isPasswd($("#p_passwd").children("input").val()))
 		{
 			$("#p_passwd").children("span.ok").hide();
 			$("#p_passwd").children("span.error").show();
+			return false;
 		}
 		else
 		{
 			$("#p_passwd").children("span.ok").show();
 			$("#p_passwd").children("span.error").hide();
+			return true;
 		}			
-	});
+	}
+	$("#p_passwd").children("input").change(checkPasswd);
 	
 
-	//é‡å¤å¯†ç 
-	$("#p_passwd2").children("input").change('input',function(){
+	//ÖØ¸´ÃÜÂë
+	function checkPasswd2(){
 		if( $("#p_passwd").children("input").val() != $("#p_passwd2").children("input").val())
 		{
 			$("#p_passwd2").children("span.ok").hide();
 			$("#p_passwd2").children("span.error").show();
+			return false;
+		}
+		else if($("#p_passwd").children("input").val() == "")
+		{
+			$("#p_passwd2").children("span.ok").hide();
+			$("#p_passwd2").children("span.error").hide();
+			return false;
 		}
 		else
 		{
 			$("#p_passwd2").children("span.ok").show();
 			$("#p_passwd2").children("span.error").hide();
+			return true;
 		}			
-	});
+	}
+	$("#p_passwd2").children("input").change(checkPasswd2);
 
+	//Éí·İÖ¤ºÅ
 	function isIdCard(str){
 		var reg = /^[1-9][0-9]{16}[0-9x]$/; 
 		return reg.test(str); 
 	}
-	$("#p_idCard").children("input").change('input',function(){
+	function checkIdCard(){
 		if( !isIdCard($("#p_idCard").children("input").val()) )
 		{
 			$("#p_idCard").children("span.ok").hide();
 			$("#p_idCard").children("span.error").show();
+			return false;
 		}
 		else
 		{
 			$("#p_idCard").children("span.ok").show();
 			$("#p_idCard").children("span.error").hide();
+			return true;
 		}			
-	});
+	}
+	$("#p_idCard").children("input").change(checkIdCard);
 
-	//é‚®ç®±
+	//ÓÊÏä
 	function isEmail(str){ 
-		var reg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/; 
+		var reg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+$/; 
 		return reg.test(str); 
 	} 
-	$("#p_email").children("input").change('input',function(){
+	function checkEmail(){
 		if( !isEmail($("#p_email").children("input").val()) )
 		{
 			$("#p_email").children("span.ok").hide();
 			$("#p_email").children("span.error").show();
+			return false;
 		}
 		else
 		{
 			$("#p_email").children("span.ok").show();
 			$("#p_email").children("span.error").hide();
+			return true;
 		}			
-	});
+	}
+	$("#p_email").children("input").change(checkEmail);
 	
 
-	//çœŸå®å§“å
-	// æ±‰å­—çš„æ­£åˆ™è¡¨è¾¾å¼/[\u4E00-\u9FA5]/
+	//ÕæÊµĞÕÃû
+	// ºº×ÖµÄÕıÔò±í´ïÊ½/[\u4E00-\u9FA5]/
 	function isName(str){ 
 		var reg = /^[\u4E00-\u9FA5]{2,5}$/; 
 		return reg.test(str); 
 	} 
-	$("#p_name").children("input").change('input',function(){
+	function checkName(){
 		if( !isName($("#p_name").children("input").val()) )
 		{
 			$("#p_name").children("span.ok").hide();
 			$("#p_name").children("span.error").show();
+			return false;
 		}
 		else if($("#p_name").children("input").val() == "")
 		{
 			$("#p_name").children("span.ok").hide();
 			$("#p_name").children("span.error").hide();
+			return false;
 		}
 		else
 		{
 			$("#p_name").children("span.ok").show();
 			$("#p_name").children("span.error").hide();
+			return true;
 		}
-	});
+	}
+	$("#p_name").children("input").change(checkName);
 
-	//æäº¤æŒ‰é’®
+	//Ìá½»°´Å¥
+	function checkAll()
+	{
+		checkUsername();
+		checkPasswd();
+		checkPasswd2();
+		checkName();
+		checkEmail();
+		checkIdCard();
+
+		// if(checkUsername() && 
+		// 	checkPasswd() &&
+		// 	checkPasswd2() &&
+		// 	checkEmail() &&
+		// 	checkName() &&
+		// 	checkIdCard())
+			return true;
+		// else
+		// {
+		// 	return false;
+		// }
+	}
 	$("#bt_submitReg").click(function(){
-		
+		if(checkAll() == true)
+		{
+			$.ajax({
+				type: 'POST',
+				url: "/php/regist.php" ,
+				data: {
+					type:"regist",
+					username: $("#p_username").children("input").val(),
+					passwd: $("#p_passwd").children("input").val(),	
+					idCard: $("#p_idCard").children("input").val(),	
+					email: $("#p_email").children("input").val(),	
+					name: $("#p_name").children("input").val(),	
+				},
+				success: function(data) 
+				{
+					if(data['status'] == "1")
+					{
+						//ÌáÊ¾³É¹¦×¢²á
+						$(".regSuccess").show();
+						$(".regForm").hide();
+						Load("index.html");
+					}
+					else
+					{
+						alert("error:"+data['description']);
+					}
+				},
+				dataType:'json',
+				error : function() {       
+					alert("ÍøÂçÒì³££¡");  
+					return 0;  
+				}    
+			});
+		}
+		else
+		{
+			alert("???");
+		}
 	});
 });

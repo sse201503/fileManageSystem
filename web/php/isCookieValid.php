@@ -1,12 +1,13 @@
 <?php
+include './SaeMysqlLib.php';//为保障非SAE平台运行时SAE的MySQL类也可以使用
 if($_POST["type"] == "isCookieValid" && $_POST["username"] && $_POST["cookie"])
 {
     $mysql = new SaeMysql();//与sae的数据库自动连接
-    $sql = "SELECT username,code FROM `user` where username='".$_POST["username"]."';";
+    $sql = "SELECT username,passwd FROM `user` where username='".$_POST["username"]."';";
     $anyuser= $mysql->getData( $sql );
-    $mysql->closeDb();
+    // $mysql->closeDb();
     
-    if(md5($_POST["username"] + $anyuser[0]['code']) == $_POST["cookie"])
+    if(md5($_POST["username"] + $anyuser[0]['passwd']) == $_POST["cookie"])
         echo "1";
     else
     	echo "0";
