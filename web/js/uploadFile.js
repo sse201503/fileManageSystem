@@ -60,7 +60,16 @@ $(document).ready(function(){
             var xhr = new XMLHttpRequest();
             xhr.open("post", FileController, true);
             xhr.onload = function () {
-                alert("上传完成!");
+                alert(xhr.response);
+                var obj = JSON.parse(xhr.response);
+                if(obj.status == 1)
+                {
+                    alert("上传成功");
+                }
+                else
+                {
+                    alert(obj.description);
+                }
                 $("#file").val("");
                 $("#progressBar").hide();
             };
