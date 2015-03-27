@@ -42,13 +42,13 @@ $(document).ready(function(){
                 {
                     $("#user-name").text(getCookie("username"));
                     $("div.unLanded").hide();
+                    window.location.href = "file.html";
                     // alert("已经登录了");
                 }
                 else
                 {
-                    $("div.alreadyLanded").hide();
-                    alert("登录已失效，请重新登录");
-                    alert(data);   
+                    window.location.href = "index.html";
+                    alert("登录已失效，请重新登录");  
                 }
             },
             dataType:'json',
@@ -62,33 +62,6 @@ $(document).ready(function(){
     {
         $("div.alreadyLanded").hide();
     }
-    
-    
-    // /***********  登录状态下   **********/
-    // $("#div_user_name_menu").hide();
-    // $(".alreadyLanded").mouseover(
-    //     function()
-    //     {
-    //         $("#div_user_name_menu").show();
-    //     }
-    // );
-    // $(".div_landed").mouseleave(
-    //     function()
-    //     {
-    //         $("#div_user_name_menu").hide();
-    //     }
-    // );
-    // $("#quit").click(
-    //     function()
-    //     {
-    //         //删除cookie（取消自动登录）
-    //         setCookie("ZZFLSCookie",'',-1);
-    //         setCookie("username",'',-1);
-    //         //刷新页面
-    //         window.location.reload();
-    //     }
-    // );
-    
     
     /************  利用Ajax登录验证  ***********/
     
@@ -110,9 +83,10 @@ $(document).ready(function(){
                         //登录成功，先设置cookie
                         setCookie("cookie",data['cookie'],7);
                         setCookie("username",data['username'],7);
+                        setCookie("auth",data['auth'],7);
                         
                         //刷新页面
-                        window.location.reload();
+                        window.location.reload("file.html");
                     }
                     else
                     {

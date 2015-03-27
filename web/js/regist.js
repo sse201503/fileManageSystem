@@ -6,10 +6,6 @@ $(document).ready(function(){
 	$(".ok").hide();
 	$(".error").hide();
 
-
-	//自动跳转
-	
-
 	//用户名
 	function isUsernameOK(str){
 		$.ajax({
@@ -42,16 +38,18 @@ $(document).ready(function(){
 			}    
 		});
 	}
+
+	//用户名
 	function isUsername(str)
 	{
-		var reg = /^[0-9]{5,10}$/; 
+		var reg = /^[0-9a-zA-Z]{2,20}$/; 
 		return reg.test(str); 
 	}
 	function checkUsername(){
 		if( !isUsername($("#p_username").children("input").val()) )
 		{
 			$("#p_username").children("span.ok").hide();
-			$("#p_username").children("span.error").text("工号格式错误");
+			$("#p_username").children("span.error").text("用户名只可使用数字和英文字母");
 			$("#p_username").children("span.error").show();
 			return false;
 		}
@@ -62,6 +60,30 @@ $(document).ready(function(){
 
 	}
 	$("#p_username").children("input").change(checkUsername);
+
+	//工号
+	function isWorkId(str)
+	{
+		var reg = /^[0-9]{5,10}$/; 
+		return reg.test(str); 
+	}
+	function checkWorkId(){
+		if( !isWorkId($("#p_workId").children("input").val()) )
+		{
+			$("#p_workId").children("span.ok").hide();
+			$("#p_workId").children("span.error").text("工号格式错误");
+			$("#p_workId").children("span.error").show();
+			return false;
+		}
+		else 
+		{
+			$("#p_workId").children("span.ok").show();
+			$("#p_workId").children("span.error").hide();
+			return true;
+		}
+
+	}
+	$("#p_workId").children("input").change(checkWorkId);
 
 	//密码
 	function isPasswd(str){
@@ -130,7 +152,7 @@ $(document).ready(function(){
 
 	//邮箱
 	function isEmail(str){ 
-		var reg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+$/; 
+		var reg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/; 
 		return reg.test(str); 
 	} 
 	function checkEmail(){
@@ -213,6 +235,7 @@ $(document).ready(function(){
 					idCard: $("#p_idCard").children("input").val(),	
 					email: $("#p_email").children("input").val(),	
 					name: $("#p_name").children("input").val(),	
+					workId: $("#p_workId").children("input").val(),	
 				},
 				success: function(data) 
 				{
@@ -221,7 +244,8 @@ $(document).ready(function(){
 						//提示成功注册
 						$(".regSuccess").show();
 						$(".regForm").hide();
-						Load("index.html");
+						alert("注册成功");
+						setTimeout(window.location.href="index.html",3000);
 					}
 					else
 					{

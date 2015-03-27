@@ -19,7 +19,7 @@ if($_POST["type"]=="login")
             //用户密码做一次md5加密即为数据库中密码
             if(md5($_POST["passwd"]) == $anyuser[0]['passwd'])
             {
-                $POST = array ('type'=>"login",'status'=>1,'username'=>$_POST["username"],'cookie'=>md5($_POST["username"]+$anyuser[0]['passwd'])  );
+                $POST = array ('type'=>"login",'status'=>1,'username'=>$_POST["username"],'cookie'=>md5($_POST["username"]+$anyuser[0]['passwd']),'auth'=>$anyuser[0]['auth']  );
             }
             else
             {

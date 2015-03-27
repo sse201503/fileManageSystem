@@ -19,7 +19,7 @@
 include './SaeMysqlLib.php';//为保障非SAE平台运行时SAE的MySQL类也可以使用
 if($_POST['type'] == "isUsernameOK")
 {
-	if(preg_match("|^[0-9]{5,10}$|u",$_POST['username']) == 0)
+	if(preg_match("|^[0-9A-Za-z]{2,20}$|u",$_POST['username']) == 0)
 	{
 		$returnMsg = array(
 			'type' => "isUsernameOK", 
@@ -51,7 +51,15 @@ if($_POST['type'] == "isUsernameOK")
 }
 else if($_POST['type'] == "regist")
 {
-	if(preg_match("|^[0-9]{5,10}$|u",$_POST['username']) == 0)
+	if(preg_match("|^[0-9A-Za-z]{2,20}$|u",$_POST['username']) == 0)
+	{
+		$returnMsg = array(
+			'type' => "regist", 
+			'username' => $_POST['username'], 
+			'status' => 0,
+			'description' => "用户名格式错误" );
+	}
+	else if(preg_match("|^[0-9]{5,10}$|u",$_POST['workId']) == 0)
 	{
 		$returnMsg = array(
 			'type' => "regist", 
@@ -106,7 +114,7 @@ else if($_POST['type'] == "regist")
 		}
 		else
 		{
-			$sql = "INSERT INTO `user` (`username`,`passwd`,`email`,`idCard`,`name`,`auth`) VALUES ('".$_POST['username']."','".md5($_POST['passwd'])."','".$_POST['email']."','".$_POST['idCard']."','".$_POST['name']."',0);";
+			$sql = "INSERT INTO `user` (`username`,`workId`,`passwd`,`email`,`idCard`,`name`,`auth`) VALUES ('".$_POST['username']."','".$_POST['workId']."','".md5($_POST['passwd'])."','".$_POST['email']."','".$_POST['idCard']."','".$_POST['name']."',0);";
 			$mysql -> runSql($sql);
 			if(true)
 			{

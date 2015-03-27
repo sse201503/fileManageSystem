@@ -14,7 +14,7 @@ Class SaeMysql
 	{
 		$result = mysql_query($sql);
 		while($arr[]=mysql_fetch_array($result)){}
-			return $arr;
+		return $arr;
 	}
 	function runSql($sql)
 	{
