@@ -23,20 +23,27 @@ if($_POST['type'] == "uploadFile")
 		else if($anyuser[0]['auth'] == -1 || $anyuser[0]['auth'] == $_POST['auth'])
 		{
 			//目录名
-			$folder = md5(time().$anyuser[0]['id'].rand(1,99999));
+			//$folder = md5(time().$anyuser[0]['id'].rand(1,99999));
+			
+			
 			mkdir("../upload/",0777);
 			mkdir("../upload/".$_POST['auth'],0777);
-			mkdir("../upload/".$_POST['auth']."/".$folder."/",0777);
-			$url = "../upload/".$_POST['auth']."/".$folder."/";
+			//mkdir("../upload/".$_POST['auth']."/".$folder."/",0777);
+			//$url = "../upload/".$_POST['auth']."/".$folder."/";
+			$url = "../upload/".$_POST['auth']."/";
+
+			$name=explode('.',$_FILES["file"]["name"]);
+			$newname = md5(time().$anyuser[0]['id'].rand(1,99999)).'.'.$name[1];
 
 			//传文件
-			move_uploaded_file($_FILES["file"]["tmp_name"],$url.$_FILES["file"]["name"]);
+			move_uploaded_file($_FILES["file"]["tmp_name"],$url.$newname);
+
 
 			//存数据库
-			$sql = "INSERT INTO `file` (`name`,`userId`,`auth`,`location`,`status`,`md5`) VALUES ('".$_FILES["file"]["name"]."', '".$anyuser[0]['id']."', '".$_POST['auth']."', '".$url."', 1, '".md5_file($url.$_FILES["file"]["name"])."');";
+			$sql = "INSERT INTO `file` (`name`,`userId`,`auth`,`location`,`status`,`md5`) VALUES ('".$newname."', '".$anyuser[0]['id']."', '".$_POST['auth']."', '".$url."', 1, '".md5_file($url.$newname)."');";
 			if($mysql -> runSql($sql))
 			{
-				$POST = array ('type'=>"uploadFile",'status'=>1,'fileName'=>$_FILES["file"]["name"]);
+				$POST = array ('type'=>"uploadFile",'status'=>1,'fileName'=>$newname);
 			}
 			else
 			{
