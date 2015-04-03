@@ -33,18 +33,18 @@ if($_POST['type'] == "uploadFile")
 			$url = "../upload/".$_POST['auth']."/";
 
 			//文件新名称
-			$name=explode('.',$_FILES["file"]["name"]);
-			$newname = md5(time().$anyuser[0]['id'].rand(1,99999)).'.'.$name[1];
+			$ext_name=pathinfo($_FILES["file"]["name"], PATHINFO_EXTENSION); 
+			$newname = md5(time().$anyuser[0]['id'].rand(1,99999)).'.'.$ext_name;
 
 			//传文件
 			move_uploaded_file($_FILES["file"]["tmp_name"],$url.$newname);
 
 
 			//存数据库
-			$sql = "INSERT INTO `file` (`name`,`userId`,`auth`,`location`,`status`,`md5`) VALUES ('".$newname."', '".$anyuser[0]['id']."', '".$_POST['auth']."', '".$url."', 1, '".md5_file($url.$newname)."');";
+			$sql = "INSERT INTO `file` (`name`,`userId`,`auth`,`location`,`status`,`md5`) VALUES ('".$_FILES["file"]["name"]."', '".$anyuser[0]['id']."', '".$_POST['auth']."', '".$url.$newname."', 1, '".md5_file($url.$newname)."');";
 			if($mysql -> runSql($sql))
 			{
-				$POST = array ('type'=>"uploadFile",'status'=>1,'fileName'=>$newname);
+				$POST = array ('type'=>"uploadFile",'status'=>1,'fileName'=>$_FILES["file"]["name"]);
 			}
 			else
 			{
