@@ -32,6 +32,7 @@ if($_POST['type'] == "uploadFile")
 			//$url = "../upload/".$_POST['auth']."/".$folder."/";
 			$url = "../upload/".$_POST['auth']."/";
 
+			//文件新名称
 			$name=explode('.',$_FILES["file"]["name"]);
 			$newname = md5(time().$anyuser[0]['id'].rand(1,99999)).'.'.$name[1];
 
