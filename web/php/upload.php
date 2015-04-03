@@ -28,8 +28,6 @@ if($_POST['type'] == "uploadFile")
 			
 			mkdir("../upload/",0777);
 			mkdir("../upload/".$_POST['auth'],0777);
-			//mkdir("../upload/".$_POST['auth']."/".$folder."/",0777);
-			//$url = "../upload/".$_POST['auth']."/".$folder."/";
 			$url = "../upload/".$_POST['auth']."/";
 
 			//文件新名称
